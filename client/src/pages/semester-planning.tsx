@@ -8,7 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { Plus, Calendar, BookOpen, Clock, CheckCircle, Trash2 } from "lucide-react";
+import { Plus, Calendar, BookOpen, Clock, CheckCircle, Trash2, Settings, GripVertical } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { useForm } from "react-hook-form";
@@ -30,6 +30,8 @@ interface Semester {
   year: number;
   courses: SemesterCourse[];
   totalUnits: number;
+  maxClasses: number;
+  maxUnits: number;
   isCompleted: boolean;
 }
 
@@ -37,6 +39,8 @@ export default function SemesterPlanning() {
   const [isAddSemesterOpen, setIsAddSemesterOpen] = useState(false);
   const [isAddCourseOpen, setIsAddCourseOpen] = useState(false);
   const [selectedSemester, setSelectedSemester] = useState<string | null>(null);
+  const [draggedCourse, setDraggedCourse] = useState<{course: SemesterCourse, fromSemester: string} | null>(null);
+  const [isEditingSemester, setIsEditingSemester] = useState<string | null>(null);
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
@@ -55,6 +59,8 @@ export default function SemesterPlanning() {
         { id: "2", courseCode: "ENGL 300", title: "College Composition", units: 3, isCompleted: true, grade: "B+" },
       ],
       totalUnits: 7,
+      maxClasses: 4,
+      maxUnits: 16,
       isCompleted: true
     },
     {
@@ -66,6 +72,8 @@ export default function SemesterPlanning() {
         { id: "4", courseCode: "CS 300", title: "Intro to Programming", units: 4, isCompleted: false },
       ],
       totalUnits: 8,
+      maxClasses: 4,
+      maxUnits: 16,
       isCompleted: false
     }
   ]);
@@ -74,6 +82,15 @@ export default function SemesterPlanning() {
     defaultValues: {
       term: "",
       year: new Date().getFullYear(),
+      maxClasses: 4,
+      maxUnits: 16,
+    }
+  });
+
+  const semesterSettingsForm = useForm({
+    defaultValues: {
+      maxClasses: 4,
+      maxUnits: 16,
     }
   });
 
@@ -93,6 +110,8 @@ export default function SemesterPlanning() {
       year: data.year,
       courses: [],
       totalUnits: 0,
+      maxClasses: data.maxClasses,
+      maxUnits: data.maxUnits,
       isCompleted: false
     };
     setSemesters([...semesters, newSemester].sort((a, b) => {
@@ -163,6 +182,94 @@ export default function SemesterPlanning() {
       }
       return sem;
     }));
+  };
+
+  const handleDragStart = (course: SemesterCourse, semesterId: string) => {
+    setDraggedCourse({ course, fromSemester: semesterId });
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+  };
+
+  const handleDrop = (e: React.DragEvent, targetSemesterId: string) => {
+    e.preventDefault();
+    if (!draggedCourse) return;
+
+    const { course, fromSemester } = draggedCourse;
+    
+    if (fromSemester === targetSemesterId) {
+      setDraggedCourse(null);
+      return;
+    }
+
+    // Check if target semester can accommodate the course
+    const targetSemester = semesters.find(s => s.id === targetSemesterId);
+    if (!targetSemester) return;
+
+    const wouldExceedClasses = targetSemester.courses.length >= targetSemester.maxClasses;
+    const wouldExceedUnits = targetSemester.totalUnits + course.units > targetSemester.maxUnits;
+
+    if (wouldExceedClasses) {
+      toast({
+        title: "Cannot move course",
+        description: `This semester already has the maximum number of classes (${targetSemester.maxClasses}).`,
+        variant: "destructive"
+      });
+      setDraggedCourse(null);
+      return;
+    }
+
+    if (wouldExceedUnits) {
+      toast({
+        title: "Cannot move course",
+        description: `This would exceed the maximum units (${targetSemester.maxUnits}) for this semester.`,
+        variant: "destructive"
+      });
+      setDraggedCourse(null);
+      return;
+    }
+
+    // Move the course
+    setSemesters(prev => prev.map(sem => {
+      if (sem.id === fromSemester) {
+        // Remove from source semester
+        const updatedCourses = sem.courses.filter(c => c.id !== course.id);
+        return {
+          ...sem,
+          courses: updatedCourses,
+          totalUnits: updatedCourses.reduce((sum, c) => sum + c.units, 0)
+        };
+      } else if (sem.id === targetSemesterId) {
+        // Add to target semester
+        const updatedCourses = [...sem.courses, course];
+        return {
+          ...sem,
+          courses: updatedCourses,
+          totalUnits: updatedCourses.reduce((sum, c) => sum + c.units, 0)
+        };
+      }
+      return sem;
+    }));
+
+    setDraggedCourse(null);
+    toast({
+      title: "Course moved",
+      description: `${course.courseCode} has been moved to ${getTermDisplay(targetSemester.term)} ${targetSemester.year}.`,
+    });
+  };
+
+  const updateSemesterSettings = (semesterId: string, data: any) => {
+    setSemesters(prev => prev.map(sem => 
+      sem.id === semesterId 
+        ? { ...sem, maxClasses: data.maxClasses, maxUnits: data.maxUnits }
+        : sem
+    ));
+    setIsEditingSemester(null);
+    toast({
+      title: "Semester settings updated",
+      description: `Class and unit limits have been updated.`,
+    });
   };
 
   const getTermDisplay = (term: string) => {
@@ -336,6 +443,44 @@ export default function SemesterPlanning() {
                       </FormItem>
                     )}
                   />
+                  <FormField
+                    control={semesterForm.control}
+                    name="maxClasses"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Max Classes</FormLabel>
+                        <FormControl>
+                          <Input 
+                            type="number" 
+                            min="1" 
+                            max="8" 
+                            {...field}
+                            onChange={(e) => field.onChange(parseInt(e.target.value) || 4)}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={semesterForm.control}
+                    name="maxUnits"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Max Units</FormLabel>
+                        <FormControl>
+                          <Input 
+                            type="number" 
+                            min="6" 
+                            max="24" 
+                            {...field}
+                            onChange={(e) => field.onChange(parseInt(e.target.value) || 16)}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                   <Button type="submit">Add Semester</Button>
                 </form>
               </Form>
@@ -372,16 +517,91 @@ export default function SemesterPlanning() {
                     )}
                     <span>{getTermDisplay(semester.term)} {semester.year}</span>
                   </CardTitle>
-                  <Badge variant={semester.isCompleted ? "secondary" : "outline"}>
-                    {semester.totalUnits} units
-                  </Badge>
+                  <div className="flex items-center space-x-2">
+                    <Dialog open={isEditingSemester === semester.id} onOpenChange={(open) => setIsEditingSemester(open ? semester.id : null)}>
+                      <DialogTrigger asChild>
+                        <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                          <Settings className="h-4 w-4" />
+                        </Button>
+                      </DialogTrigger>
+                      <DialogContent>
+                        <DialogHeader>
+                          <DialogTitle>Semester Settings</DialogTitle>
+                        </DialogHeader>
+                        <Form {...semesterSettingsForm}>
+                          <form onSubmit={semesterSettingsForm.handleSubmit((data) => updateSemesterSettings(semester.id, data))} className="space-y-4">
+                            <FormField
+                              control={semesterSettingsForm.control}
+                              name="maxClasses"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>Maximum Classes</FormLabel>
+                                  <FormControl>
+                                    <Input 
+                                      type="number" 
+                                      min="1" 
+                                      max="8" 
+                                      {...field}
+                                      defaultValue={semester.maxClasses}
+                                      onChange={(e) => field.onChange(parseInt(e.target.value) || semester.maxClasses)}
+                                    />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                            <FormField
+                              control={semesterSettingsForm.control}
+                              name="maxUnits"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>Maximum Units</FormLabel>
+                                  <FormControl>
+                                    <Input 
+                                      type="number" 
+                                      min="6" 
+                                      max="24" 
+                                      {...field}
+                                      defaultValue={semester.maxUnits}
+                                      onChange={(e) => field.onChange(parseInt(e.target.value) || semester.maxUnits)}
+                                    />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                            <Button type="submit">Update Settings</Button>
+                          </form>
+                        </Form>
+                      </DialogContent>
+                    </Dialog>
+                    <div className="flex flex-col text-xs text-right">
+                      <Badge variant={
+                        semester.courses.length > semester.maxClasses ? "destructive" :
+                        semester.courses.length === semester.maxClasses ? "secondary" : "outline"
+                      }>
+                        {semester.courses.length}/{semester.maxClasses} classes
+                      </Badge>
+                      <Badge variant={
+                        semester.totalUnits > semester.maxUnits ? "destructive" :
+                        semester.totalUnits >= semester.maxUnits * 0.9 ? "secondary" : "outline"
+                      } className="mt-1">
+                        {semester.totalUnits}/{semester.maxUnits} units
+                      </Badge>
+                    </div>
+                  </div>
                 </div>
               </CardHeader>
-              <CardContent className="space-y-3">
+              <CardContent 
+                className="space-y-3" 
+                onDragOver={handleDragOver}
+                onDrop={(e) => handleDrop(e, semester.id)}
+              >
                 {semester.courses.length === 0 ? (
-                  <div className="text-center py-4 border-2 border-dashed rounded-lg">
+                  <div className="text-center py-4 border-2 border-dashed rounded-lg min-h-[120px] flex flex-col justify-center">
                     <BookOpen className="h-8 w-8 mx-auto text-muted-foreground mb-2" />
                     <p className="text-sm text-muted-foreground">No courses added</p>
+                    <p className="text-xs text-muted-foreground mb-2">Drop courses here to add them</p>
                     <Button
                       variant="ghost"
                       size="sm"
@@ -398,21 +618,31 @@ export default function SemesterPlanning() {
                 ) : (
                   <>
                     {semester.courses.map((course) => (
-                      <div key={course.id} className="p-3 border rounded-lg space-y-2">
+                      <div 
+                        key={course.id} 
+                        className="p-3 border rounded-lg space-y-2 cursor-move hover:shadow-sm transition-shadow" 
+                        draggable={!course.isCompleted}
+                        onDragStart={() => handleDragStart(course, semester.id)}
+                      >
                         <div className="flex items-start justify-between">
-                          <div className="flex-1">
-                            <div className="flex items-center space-x-2">
-                              <h4 className="font-medium text-sm">{course.courseCode}</h4>
-                              <Badge variant="outline" className="text-xs">
-                                {course.units} units
-                              </Badge>
-                              {course.isCompleted && course.grade && (
-                                <Badge variant="secondary" className="text-xs">
-                                  {course.grade}
+                          <div className="flex items-start space-x-2 flex-1">
+                            {!course.isCompleted && (
+                              <GripVertical className="h-4 w-4 text-muted-foreground mt-0.5" />
+                            )}
+                            <div className="flex-1">
+                              <div className="flex items-center space-x-2">
+                                <h4 className="font-medium text-sm">{course.courseCode}</h4>
+                                <Badge variant="outline" className="text-xs">
+                                  {course.units} units
                                 </Badge>
-                              )}
+                                {course.isCompleted && course.grade && (
+                                  <Badge variant="secondary" className="text-xs">
+                                    {course.grade}
+                                  </Badge>
+                                )}
+                              </div>
+                              <p className="text-sm text-muted-foreground mt-1">{course.title}</p>
                             </div>
-                            <p className="text-sm text-muted-foreground mt-1">{course.title}</p>
                           </div>
                           <div className="flex space-x-1">
                             <Button
@@ -447,9 +677,10 @@ export default function SemesterPlanning() {
                         courseForm.setValue("semesterId", semester.id);
                         setIsAddCourseOpen(true);
                       }}
+                      disabled={semester.courses.length >= semester.maxClasses}
                     >
                       <Plus className="h-4 w-4 mr-2" />
-                      Add Course
+                      {semester.courses.length >= semester.maxClasses ? 'Semester Full' : 'Add Course'}
                     </Button>
                   </>
                 )}
