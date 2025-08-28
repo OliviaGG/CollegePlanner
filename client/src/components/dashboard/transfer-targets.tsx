@@ -1,25 +1,46 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { useQuery } from "@tanstack/react-query";
+import { useLocation } from "wouter";
 
 export default function TransferTargets() {
-  const targets = [
-    {
-      id: "ucb",
-      name: "UC Berkeley",
-      major: "Computer Science",
-      initials: "UC",
-      completion: 85,
-      color: "bg-blue-100 text-blue-700",
-    },
-    {
-      id: "sjsu",
-      name: "SJSU",
-      major: "Computer Science",
-      initials: "CS",
-      completion: 92,
-      color: "bg-red-100 text-red-700",
-    },
-  ];
+  const { data: targetSchools } = useQuery({
+    queryKey: ["/api/target-schools"],
+  });
+
+  const getInitials = (name: string) => {
+    return name
+      .split(' ')
+      .map(word => word[0])
+      .join('')
+      .toUpperCase()
+      .slice(0, 2);
+  };
+
+  const getCompletionPercentage = () => {
+    // Mock completion percentage - in real app, calculate based on courses
+    return Math.floor(Math.random() * 30) + 70;
+  };
+
+  const getColorClass = (index: number) => {
+    const colors = [
+      "bg-blue-100 text-blue-700",
+      "bg-red-100 text-red-700", 
+      "bg-green-100 text-green-700",
+      "bg-purple-100 text-purple-700",
+      "bg-orange-100 text-orange-700"
+    ];
+    return colors[index % colors.length];
+  };
+
+  const targets = targetSchools?.map((school: any, index: number) => ({
+    id: school.id,
+    name: school.institutionName,
+    major: school.major,
+    initials: getInitials(school.institutionName),
+    completion: getCompletionPercentage(),
+    color: getColorClass(index),
+  })) || [];
 
   return (
     <Card className="rounded-xl">
@@ -57,6 +78,7 @@ export default function TransferTargets() {
           variant="outline" 
           className="w-full p-3 border-2 border-dashed border-border text-muted-foreground hover:border-primary hover:text-primary"
           data-testid="button-add-transfer-target"
+          onClick={() => window.location.href = '/profile'}
         >
           + Add Transfer Target
         </Button>

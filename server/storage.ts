@@ -7,7 +7,8 @@ import {
   type Document, type InsertDocument,
   type ArticulationAgreement, type InsertArticulationAgreement,
   type Deadline, type InsertDeadline,
-  type ActivityLog, type InsertActivityLog
+  type ActivityLog, type InsertActivityLog,
+  type TargetSchool, type InsertTargetSchool
 } from "@shared/schema";
 import { randomUUID } from "crypto";
 
@@ -61,6 +62,11 @@ export interface IStorage {
   // Activity Log methods
   getActivityLogByUser(userId: string): Promise<ActivityLog[]>;
   createActivityLog(activity: InsertActivityLog): Promise<ActivityLog>;
+
+  // Target School methods
+  getTargetSchoolsByUser(userId: string): Promise<TargetSchool[]>;
+  createTargetSchool(data: InsertTargetSchool): Promise<TargetSchool>;
+  deleteTargetSchool(id: string): Promise<boolean>;
 }
 
 export class MemStorage implements IStorage {
@@ -73,6 +79,7 @@ export class MemStorage implements IStorage {
   private articulationAgreements: Map<string, ArticulationAgreement>;
   private deadlines: Map<string, Deadline>;
   private activityLogs: Map<string, ActivityLog>;
+  private targetSchools: TargetSchool[] = [];
 
   constructor() {
     this.users = new Map();
@@ -310,6 +317,37 @@ export class MemStorage implements IStorage {
     };
     this.activityLogs.set(id, activity);
     return activity;
+  }
+
+  // Target Schools
+  async getTargetSchoolsByUser(userId: string): Promise<TargetSchool[]> {
+    return this.targetSchools.filter(school => school.userId === userId)
+      .sort((a, b) => new Date(a.createdAt!).getTime() - new Date(b.createdAt!).getTime());
+  }
+
+  async createTargetSchool(data: InsertTargetSchool): Promise<TargetSchool> {
+    const targetSchool: TargetSchool = {
+      id: randomUUID(),
+      ...data,
+      createdAt: new Date(),
+    };
+    this.targetSchools.push(targetSchool);
+    return targetSchool;
+  }
+
+  async deleteTargetSchool(id: string): Promise<boolean> {
+    const index = this.targetSchools.findIndex(school => school.id === id);
+    if (index === -1) return false;
+    this.targetSchools.splice(index, 1);
+    return true;
+  }
+
+  async updateUser(userId: string, updates: Partial<InsertUser>): Promise<User | null> {
+    const index = this.users.findIndex(user => user.id === userId);
+    if (index === -1) return null;
+
+    this.users[index] = { ...this.users[index], ...updates };
+    return this.users[index];
   }
 }
 

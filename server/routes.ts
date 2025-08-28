@@ -9,7 +9,8 @@ import {
   insertPlannedSemesterSchema,
   insertArticulationAgreementSchema,
   insertDeadlineSchema,
-  insertActivityLogSchema
+  insertActivityLogSchema,
+  insertTargetSchoolSchema
 } from "@shared/schema";
 import { z } from "zod";
 import axios from "axios";
@@ -291,6 +292,77 @@ export async function registerRoutes(app: Express): Promise<Server> {
     const userId = "demo-user-id";
     const activities = await storage.getActivityLogByUser(userId);
     res.json(activities);
+  });
+
+  // Update user profile
+  app.put("/api/user/profile", async (req, res) => {
+    try {
+      const userId = "demo-user-id";
+      const updates = req.body;
+      const user = await storage.updateUser(userId, updates);
+      
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      await storage.createActivityLog({
+        userId: userId,
+        action: "UPDATE_PROFILE",
+        description: "Updated profile information",
+        entityType: "USER",
+        entityId: userId
+      });
+      
+      res.json(user);
+    } catch (error) {
+      res.status(400).json({ message: "Invalid profile data", error });
+    }
+  });
+
+  // Target schools
+  app.get("/api/target-schools", async (req, res) => {
+    const userId = "demo-user-id";
+    const targetSchools = await storage.getTargetSchoolsByUser(userId);
+    res.json(targetSchools);
+  });
+
+  app.post("/api/target-schools", async (req, res) => {
+    try {
+      const targetData = {
+        ...req.body,
+        userId: "demo-user-id"
+      };
+      const targetSchool = await storage.createTargetSchool(targetData);
+
+      await storage.createActivityLog({
+        userId: "demo-user-id",
+        action: "ADD_TARGET_SCHOOL",
+        description: `Added target school: ${targetSchool.institutionName}`,
+        entityType: "TARGET_SCHOOL",
+        entityId: targetSchool.id
+      });
+      
+      res.json(targetSchool);
+    } catch (error) {
+      res.status(400).json({ message: "Invalid target school data", error });
+    }
+  });
+
+  app.delete("/api/target-schools/:id", async (req, res) => {
+    const deleted = await storage.deleteTargetSchool(req.params.id);
+    if (!deleted) {
+      return res.status(404).json({ message: "Target school not found" });
+    }
+
+    await storage.createActivityLog({
+      userId: "demo-user-id",
+      action: "DELETE_TARGET_SCHOOL",
+      description: "Removed target school",
+      entityType: "TARGET_SCHOOL",
+      entityId: req.params.id
+    });
+    
+    res.json({ success: true });
   });
 
   // Dashboard stats

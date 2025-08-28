@@ -117,6 +117,19 @@ export const activityLog = pgTable("activity_log", {
   timestamp: timestamp("timestamp").defaultNow(),
 });
 
+// Target Schools table
+export const targetSchools = pgTable("target_schools", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  userId: varchar("user_id").references(() => users.id).notNull(),
+  institutionId: varchar("institution_id").references(() => institutions.id).notNull(),
+  institutionName: text("institution_name").notNull(),
+  major: text("major").notNull(),
+  targetDate: timestamp("target_date").notNull(),
+  priority: text("priority").notNull(), // "HIGH", "MEDIUM", "LOW"
+  notes: text("notes"),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
 // Insert schemas
 export const insertUserSchema = createInsertSchema(users).omit({
   id: true,
@@ -159,6 +172,11 @@ export const insertActivityLogSchema = createInsertSchema(activityLog).omit({
   timestamp: true,
 });
 
+export const insertTargetSchoolSchema = createInsertSchema(targetSchools).omit({
+  id: true,
+  createdAt: true,
+});
+
 // Types
 export type User = typeof users.$inferSelect;
 export type InsertUser = z.infer<typeof insertUserSchema>;
@@ -186,3 +204,6 @@ export type InsertDeadline = z.infer<typeof insertDeadlineSchema>;
 
 export type ActivityLog = typeof activityLog.$inferSelect;
 export type InsertActivityLog = z.infer<typeof insertActivityLogSchema>;
+
+export type TargetSchool = typeof targetSchools.$inferSelect;
+export type InsertTargetSchool = z.infer<typeof insertTargetSchoolSchema>;

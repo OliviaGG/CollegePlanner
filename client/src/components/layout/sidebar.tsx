@@ -11,7 +11,8 @@ import {
   Handshake,
   Upload,
   BookOpen,
-  Plus
+  Plus,
+  User
 } from "lucide-react";
 
 const navigation = [
@@ -30,7 +31,7 @@ const dataNavigation = [
 
 export default function Sidebar() {
   const [location] = useLocation();
-  
+
   const { data: stats } = useQuery({
     queryKey: ["/api/dashboard/stats"],
   });
@@ -70,7 +71,7 @@ export default function Sidebar() {
           <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">
             Planning
           </h3>
-          
+
           {navigation.map((item) => {
             const isActive = location === item.href;
             return (
@@ -94,7 +95,7 @@ export default function Sidebar() {
           <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">
             Data
           </h3>
-          
+
           {dataNavigation.map((item) => {
             const isActive = location === item.href;
             return (
