@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/not-found";
 import Dashboard from "@/pages/dashboard";
 import CoursePlanning from "@/pages/course-planning";
+import CourseImport from "@/pages/course-import";
 import Transcripts from "@/pages/transcripts";
 import AssistData from "@/pages/assist-data";
 import Header from "@/components/layout/header";
@@ -21,6 +22,7 @@ function Router() {
           <Switch>
             <Route path="/" component={Dashboard} />
             <Route path="/course-planning" component={CoursePlanning} />
+            <Route path="/course-import" component={CourseImport} />
             <Route path="/transcripts" component={Transcripts} />
             <Route path="/assist-data" component={AssistData} />
             <Route component={NotFound} />

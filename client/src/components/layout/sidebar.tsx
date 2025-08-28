@@ -10,6 +10,7 @@ import {
   FileText,
   Handshake,
   Upload,
+  BookOpen,
   Plus
 } from "lucide-react";
 
@@ -21,6 +22,7 @@ const navigation = [
 ];
 
 const dataNavigation = [
+  { name: "Course Import", href: "/course-import", icon: BookOpen },
   { name: "Transcripts", href: "/transcripts", icon: FileText },
   { name: "Assist.org Data", href: "/assist-data", icon: Handshake },
   { name: "Document Upload", href: "/transcripts", icon: Upload },
@@ -73,15 +75,15 @@ export default function Sidebar() {
             const isActive = location === item.href;
             return (
               <Link key={item.name} href={item.href}>
-                <a className={cn(
-                  "flex items-center space-x-3 px-3 py-2 rounded-md transition-colors",
+                <div className={cn(
+                  "flex items-center space-x-3 px-3 py-2 rounded-md transition-colors cursor-pointer",
                   isActive 
                     ? "bg-primary/10 text-primary" 
                     : "text-muted-foreground hover:bg-muted hover:text-foreground"
                 )} data-testid={`nav-${item.name.toLowerCase().replace(/\s+/g, '-')}`}>
                   <item.icon className="w-5 h-5" />
                   <span className={isActive ? "font-medium" : ""}>{item.name}</span>
-                </a>
+                </div>
               </Link>
             );
           })}
@@ -97,15 +99,15 @@ export default function Sidebar() {
             const isActive = location === item.href;
             return (
               <Link key={item.name} href={item.href}>
-                <a className={cn(
-                  "flex items-center space-x-3 px-3 py-2 rounded-md transition-colors",
+                <div className={cn(
+                  "flex items-center space-x-3 px-3 py-2 rounded-md transition-colors cursor-pointer",
                   isActive 
                     ? "bg-primary/10 text-primary" 
                     : "text-muted-foreground hover:bg-muted hover:text-foreground"
                 )} data-testid={`nav-${item.name.toLowerCase().replace(/\s+/g, '-')}`}>
                   <item.icon className="w-5 h-5" />
                   <span className={isActive ? "font-medium" : ""}>{item.name}</span>
-                </a>
+                </div>
               </Link>
             );
           })}
