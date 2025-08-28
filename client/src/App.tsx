@@ -12,6 +12,7 @@ import AssistData from "@/pages/assist-data";
 import Profile from "@/pages/profile"; // Assuming Profile component is in pages/profile
 import Header from "@/components/layout/header";
 import Sidebar from "@/components/layout/sidebar";
+import SemesterPlanning from "@/pages/semester-planning";
 
 function Router() {
   return (
@@ -26,6 +27,7 @@ function Router() {
             <Route path="/course-import" component={CourseImport} />
             <Route path="/transcripts" component={Transcripts} />
             <Route path="/profile" component={Profile} />
+            <Route path="/semester-planning" component={SemesterPlanning} />
             <Route component={NotFound} />
           </Switch>
         </main>

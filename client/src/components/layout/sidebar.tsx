@@ -88,6 +88,18 @@ export default function Sidebar() {
               </Link>
             );
           })}
+          {/* Added Semester Planning Link */}
+          <Link href="/semester-planning">
+            <div className={cn(
+              "flex items-center space-x-3 px-3 py-2 rounded-md transition-colors cursor-pointer",
+              location === "/semester-planning"
+                ? "bg-primary/10 text-primary"
+                : "text-muted-foreground hover:bg-muted hover:text-foreground"
+            )} data-testid="nav-semester-planning">
+              <Calendar className="w-5 h-5" />
+              <span className={location === "/semester-planning" ? "font-medium" : ""}>Semester Planning</span>
+            </div>
+          </Link>
         </nav>
 
         {/* Data Management Navigation */}
