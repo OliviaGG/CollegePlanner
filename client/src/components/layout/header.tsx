@@ -1,6 +1,7 @@
-import { Bell, GraduationCap } from "lucide-react";
+import { Bell } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
+import sccLogoEmblem from "@assets/scc-logo-emblem.png";
 
 export default function Header() {
   const { data: user } = useQuery({
@@ -11,11 +12,17 @@ export default function Header() {
     <header className="bg-card border-b border-border">
       <div className="flex items-center justify-between px-6 py-4">
         <div className="flex items-center space-x-4">
-          <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-              <GraduationCap className="h-4 w-4 text-primary-foreground" />
+          <div className="flex items-center space-x-3">
+            <img 
+              src={sccLogoEmblem} 
+              alt="Sacramento City College Logo" 
+              className="w-10 h-10 object-contain"
+              data-testid="scc-logo"
+            />
+            <div className="flex flex-col">
+              <h1 className="text-lg font-bold text-foreground leading-tight">SCC EduPlan</h1>
+              <span className="text-xs text-muted-foreground">Sacramento City College</span>
             </div>
-            <h1 className="text-xl font-bold text-foreground">SCC EduPlan</h1>
           </div>
         </div>
         <div className="flex items-center space-x-4">

@@ -202,7 +202,12 @@ PSYC 300|General Psychology|3|
 SPAN 101|Elementary Spanish I|4|
 SPAN 102|Elementary Spanish II|4|SPAN 101
 ART 300|Art Appreciation|3|
-MUSC 300|Music Appreciation|3|`;
+MUSC 300|Music Appreciation|3|
+ECON 302|Principles of Macroeconomics|3|
+ECON 304|Principles of Microeconomics|3|
+POLI 301|Introduction to Government|3|
+GEOG 300|Physical Geography|3|
+ANTH 310|Cultural Anthropology|3|`;
     
     bulkForm.setValue("coursesText", sampleSCCCourses);
     const parsed = parseBulkCourses(sampleSCCCourses);
