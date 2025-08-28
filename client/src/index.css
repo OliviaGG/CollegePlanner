@@ -1,44 +1,60 @@
+/* SCC Brand Typography: Futura/Function Pro alternatives + Times serif */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Times:wght@400;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  /* Design Reference Colors */
-  --background: hsl(210, 40%, 98%);
-  --foreground: hsl(222, 47%, 11%);
+  /* SCC Official Brand Colors */
+  --scc-cardinal-red: 350 89% 33%;        /* #8a0028 */
+  --scc-gold: 49 100% 50%;                 /* #ffce00 */
+  --scc-lighter-gold: 50 96% 72%;         /* #fde373 */
+  --scc-blue: 218 48% 48%;                /* #4271b5 */
+  --scc-teal: 179 100% 36%;               /* #00b7b4 */
+  --scc-purple-blue: 247 34% 47%;         /* #6950a1 */
+  --scc-orange: 26 92% 54%;               /* #f68c1f */
+  --scc-green: 129 40% 43%;               /* #43974f */
+  --scc-purple-red: 294 98% 22%;          /* #640170 */
+  --scc-charcoal: 0 0% 25%;               /* #404040 */
+
+  /* Application Colors using SCC Brand */
+  --background: hsl(0, 0%, 100%);
+  --foreground: hsl(var(--scc-charcoal));
   --card: hsl(0, 0%, 100%);
-  --card-foreground: hsl(222, 47%, 11%);
+  --card-foreground: hsl(var(--scc-charcoal));
   --popover: hsl(0, 0%, 100%);
-  --popover-foreground: hsl(222, 47%, 11%);
-  --primary: hsl(210, 100%, 20%);
-  --primary-foreground: hsl(0, 0%, 100%);
-  --secondary: hsl(174, 70%, 41%);
-  --secondary-foreground: hsl(210, 40%, 98%);
-  --muted: hsl(210, 40%, 96%);
-  --muted-foreground: hsl(215, 25%, 27%);
-  --accent: hsl(45, 100%, 45%);
-  --accent-foreground: hsl(210, 100%, 20%);
+  --popover-foreground: hsl(var(--scc-charcoal));
+  --primary: hsl(var(--scc-cardinal-red));
+  --primary-foreground: hsl(0, 0%, 98%);
+  --secondary: hsl(var(--scc-lighter-gold));
+  --secondary-foreground: hsl(var(--scc-charcoal));
+  --muted: hsl(49, 30%, 95%);
+  --muted-foreground: hsl(215, 16%, 47%);
+  --accent: hsl(var(--scc-blue));
+  --accent-foreground: hsl(0, 0%, 98%);
   --destructive: hsl(0, 84%, 60%);
   --destructive-foreground: hsl(210, 40%, 98%);
   --border: hsl(214, 32%, 91%);
   --input: hsl(214, 32%, 91%);
-  --ring: hsl(207, 90%, 54%);
-  --chart-1: hsl(207, 90%, 54%);
-  --chart-2: hsl(174, 70%, 41%);
-  --chart-3: hsl(36, 100%, 50%);
-  --chart-4: hsl(123, 38%, 57%);
-  --chart-5: hsl(43, 96%, 67%);
+  --ring: hsl(var(--scc-cardinal-red));
+  --chart-1: hsl(var(--scc-cardinal-red));
+  --chart-2: hsl(var(--scc-blue));
+  --chart-3: hsl(var(--scc-teal));
+  --chart-4: hsl(var(--scc-orange));
+  --chart-5: hsl(var(--scc-green));
   --sidebar: hsl(0, 0%, 100%);
-  --sidebar-foreground: hsl(222, 47%, 11%);
-  --sidebar-primary: hsl(210, 100%, 20%);
+  --sidebar-foreground: hsl(var(--scc-charcoal));
+  --sidebar-primary: hsl(var(--scc-cardinal-red));
   --sidebar-primary-foreground: hsl(0, 0%, 100%);
   --sidebar-accent: hsl(210, 40%, 96%);
-  --sidebar-accent-foreground: hsl(210, 100%, 20%);
+  --sidebar-accent-foreground: hsl(var(--scc-cardinal-red));
   --sidebar-border: hsl(214, 32%, 91%);
-  --sidebar-ring: hsl(207, 90%, 54%);
-  --font-sans: Inter, system-ui, sans-serif;
-  --font-serif: Georgia, serif;
+  --sidebar-ring: hsl(var(--scc-cardinal-red));
+  --font-sans: 'Nunito Sans', Inter, system-ui, sans-serif;
+  --font-serif: Times, 'Times New Roman', serif;
   --font-mono: Menlo, monospace;
   --radius: 8px;
   --shadow-2xs: 0px 2px 0px 0px hsl(207, 90%, 54%, 0.00);
@@ -54,38 +70,38 @@
 }
 
 .dark {
-  --background: hsl(222, 47%, 11%);
+  --background: hsl(var(--scc-charcoal));
   --foreground: hsl(210, 40%, 98%);
-  --card: hsl(224, 71%, 4%);
+  --card: hsl(var(--scc-charcoal));
   --card-foreground: hsl(210, 40%, 98%);
-  --popover: hsl(224, 71%, 4%);
+  --popover: hsl(var(--scc-charcoal));
   --popover-foreground: hsl(210, 40%, 98%);
-  --primary: hsl(207, 90%, 54%);
-  --primary-foreground: hsl(222, 47%, 11%);
-  --secondary: hsl(174, 70%, 41%);
+  --primary: hsl(var(--scc-gold));
+  --primary-foreground: hsl(var(--scc-charcoal));
+  --secondary: hsl(var(--scc-cardinal-red));
   --secondary-foreground: hsl(210, 40%, 98%);
-  --muted: hsl(223, 47%, 11%);
+  --muted: hsl(217, 33%, 18%);
   --muted-foreground: hsl(215, 20%, 65%);
-  --accent: hsl(36, 100%, 50%);
-  --accent-foreground: hsl(224, 71%, 4%);
-  --destructive: hsl(0, 84%, 60%);
+  --accent: hsl(var(--scc-blue));
+  --accent-foreground: hsl(210, 40%, 98%);
+  --destructive: hsl(0, 63%, 31%);
   --destructive-foreground: hsl(210, 40%, 98%);
-  --border: hsl(216, 34%, 17%);
-  --input: hsl(216, 34%, 17%);
-  --ring: hsl(207, 90%, 54%);
-  --chart-1: hsl(207, 90%, 54%);
-  --chart-2: hsl(174, 70%, 41%);
-  --chart-3: hsl(36, 100%, 50%);
-  --chart-4: hsl(123, 38%, 57%);
-  --chart-5: hsl(43, 96%, 67%);
-  --sidebar: hsl(224, 71%, 4%);
+  --border: hsl(217, 33%, 18%);
+  --input: hsl(217, 33%, 18%);
+  --ring: hsl(var(--scc-gold));
+  --chart-1: hsl(var(--scc-gold));
+  --chart-2: hsl(var(--scc-blue));
+  --chart-3: hsl(var(--scc-teal));
+  --chart-4: hsl(var(--scc-orange));
+  --chart-5: hsl(var(--scc-green));
+  --sidebar: hsl(var(--scc-charcoal));
   --sidebar-foreground: hsl(210, 40%, 98%);
-  --sidebar-primary: hsl(207, 90%, 54%);
-  --sidebar-primary-foreground: hsl(222, 47%, 11%);
-  --sidebar-accent: hsl(223, 47%, 11%);
-  --sidebar-accent-foreground: hsl(207, 90%, 54%);
-  --sidebar-border: hsl(216, 34%, 17%);
-  --sidebar-ring: hsl(207, 90%, 54%);
+  --sidebar-primary: hsl(var(--scc-gold));
+  --sidebar-primary-foreground: hsl(var(--scc-charcoal));
+  --sidebar-accent: hsl(217, 33%, 18%);
+  --sidebar-accent-foreground: hsl(var(--scc-gold));
+  --sidebar-border: hsl(217, 33%, 18%);
+  --sidebar-ring: hsl(var(--scc-gold));
 }
 
 @layer base {
@@ -98,8 +114,36 @@
     font-family: var(--font-sans);
   }
 
+  /* SCC Typography Standards */
   h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-sans);
+    font-weight: 600;
     @apply font-semibold tracking-tight;
+  }
+
+  .font-heading {
+    font-family: var(--font-sans);
+  }
+
+  .font-serif {
+    font-family: var(--font-serif);
+  }
+
+  /* SCC Brand Application */
+  .text-scc-cardinal {
+    color: hsl(var(--scc-cardinal-red));
+  }
+
+  .text-scc-gold {
+    color: hsl(var(--scc-gold));
+  }
+
+  .bg-scc-cardinal {
+    background-color: hsl(var(--scc-cardinal-red));
+  }
+
+  .bg-scc-gold {
+    background-color: hsl(var(--scc-gold));
   }
 }
 
@@ -134,66 +178,4 @@
 /* Progress circle animations */
 .progress-circle {
   transition: stroke-dashoffset 1s ease-in-out;
-}
-
-/* File upload dropzone styles */
-.dropzone-active {
-  @apply border-primary;
-  background-color: hsl(var(--primary) / 0.05);
-}
-
-/* Loading states */
-.loading-skeleton {
-  @apply animate-pulse bg-muted rounded;
-}
-
-/* Status indicators */
-.status-completed {
-  @apply text-secondary border-secondary;
-  background-color: hsl(var(--secondary) / 0.1);
-  border-color: hsl(var(--secondary) / 0.2);
-}
-
-.status-in-progress {
-  @apply text-accent border-accent;
-  background-color: hsl(var(--accent) / 0.1);
-  border-color: hsl(var(--accent) / 0.2);
-}
-
-.status-planned {
-  @apply text-primary border-primary;
-  background-color: hsl(var(--primary) / 0.1);
-  border-color: hsl(var(--primary) / 0.2);
-}
-
-/* Card hover effects */
-.card-hover {
-  @apply hover:shadow-lg transition-all duration-200;
-}
-
-.card-hover:hover {
-  border-color: hsl(var(--border) / 0.5);
-}
-
-/* Interactive elements */
-.interactive {
-  @apply hover:scale-105 active:scale-95 transition-transform duration-150;
-}
-
-/* Focus states */
-.focus-ring {
-  @apply focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:outline-none;
-}
-
-/* Custom gradient backgrounds */
-.gradient-primary {
-  background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--primary)) 100%);
-}
-
-.gradient-secondary {
-  background: linear-gradient(135deg, hsl(var(--secondary)) 0%, hsl(var(--secondary)) 100%);
-}
-
-.gradient-accent {
-  background: linear-gradient(135deg, hsl(var(--accent)) 0%, hsl(var(--accent)) 100%);
 }

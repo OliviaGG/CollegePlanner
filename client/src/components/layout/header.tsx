@@ -20,8 +20,8 @@ export default function Header() {
               data-testid="scc-logo"
             />
             <div className="flex flex-col">
-              <h1 className="text-lg font-bold text-foreground leading-tight">SCC EduPlan</h1>
-              <span className="text-xs text-muted-foreground">Sacramento City College</span>
+              <h1 className="text-lg font-bold text-primary leading-tight font-heading">SCC EduPlan</h1>
+              <span className="text-xs text-muted-foreground font-serif">Sacramento City College</span>
             </div>
           </div>
         </div>

@@ -218,7 +218,7 @@ ANTH 310|Cultural Anthropology|3|`;
     <div className="container max-w-6xl mx-auto py-6 space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold" data-testid="text-page-title">SCC Course Import</h1>
+          <h1 className="text-3xl font-bold font-heading text-scc-cardinal" data-testid="text-page-title">SCC Course Import</h1>
           <p className="text-muted-foreground mt-2">
             Import course data from the Sacramento City College 2025-2026 catalog
           </p>

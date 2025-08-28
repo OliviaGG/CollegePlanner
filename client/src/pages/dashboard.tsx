@@ -21,8 +21,8 @@ export default function Dashboard() {
     <div className="p-6 space-y-6">
       {/* Dashboard Header */}
       <div className="space-y-2">
-        <h2 className="text-3xl font-bold tracking-tight">
-          Welcome back, <span data-testid="user-first-name">{(user as any)?.firstName || "Student"}</span>
+        <h2 className="text-3xl font-bold tracking-tight font-heading">
+          Welcome back, <span data-testid="user-first-name" className="text-scc-cardinal">{(user as any)?.firstName || "Student"}</span>
         </h2>
         <p className="text-muted-foreground">
           Current Semester: <span className="font-medium">Spring 2024</span> • 
