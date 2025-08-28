@@ -1,7 +1,7 @@
 import { Bell } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
-import sccLogoEmblem from "@assets/scc-logo-emblem.png";
+import sccLogoUrl from "@assets/scc-logo-emblem-white.png";
 
 export default function Header() {
   const { data: user } = useQuery({
@@ -14,7 +14,7 @@ export default function Header() {
         <div className="flex items-center space-x-4">
           <div className="flex items-center space-x-3">
             <img 
-              src={sccLogoEmblem} 
+              src={sccLogoUrl} 
               alt="Sacramento City College Logo" 
               className="w-10 h-10 object-contain"
               data-testid="scc-logo"
