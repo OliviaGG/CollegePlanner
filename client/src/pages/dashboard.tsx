@@ -33,14 +33,14 @@ export default function Dashboard() {
 
       {/* Alerts Section */}
       <div className="space-y-3">
-        <Alert className="bg-accent/10 border-accent/20">
-          <AlertTriangle className="h-4 w-4 text-accent" />
+        <Alert className="bg-scc-gold/10 border-scc-gold/20">
+          <AlertTriangle className="h-4 w-4 text-scc-orange" />
           <AlertDescription>
-            <h4 className="font-medium text-accent-foreground mb-1">Registration Opens Soon</h4>
+            <h4 className="font-medium text-scc-charcoal mb-1">Registration Opens Soon</h4>
             <p className="text-sm text-muted-foreground mb-2">
               Priority registration for Fall 2024 opens March 15th. Make sure your education plan is complete.
             </p>
-            <button className="text-sm text-accent hover:underline" data-testid="button-view-registration">
+            <button className="text-sm text-scc-orange hover:underline" data-testid="button-view-registration">
               View Registration Info
             </button>
           </AlertDescription>

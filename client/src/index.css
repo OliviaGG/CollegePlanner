@@ -8,17 +8,17 @@
 @tailwind utilities;
 
 :root {
-  /* SCC Official Brand Colors */
-  --scc-cardinal-red: 350 89% 33%;        /* #8a0028 */
-  --scc-gold: 49 100% 50%;                 /* #ffce00 */
-  --scc-lighter-gold: 50 96% 72%;         /* #fde373 */
-  --scc-blue: 218 48% 48%;                /* #4271b5 */
-  --scc-teal: 179 100% 36%;               /* #00b7b4 */
-  --scc-purple-blue: 247 34% 47%;         /* #6950a1 */
-  --scc-orange: 26 92% 54%;               /* #f68c1f */
-  --scc-green: 129 40% 43%;               /* #43974f */
-  --scc-purple-red: 294 98% 22%;          /* #640170 */
-  --scc-charcoal: 0 0% 25%;               /* #404040 */
+  /* SCC Official Brand Colors - From Official Color Guide */
+  --scc-cardinal-red: 350 61% 33%;        /* #8a2034 - RGB(137, 32, 52) Primary */
+  --scc-gold: 49 100% 50%;                 /* #ffce00 - RGB(255, 206, 0) Primary */
+  --scc-lighter-gold: 50 96% 72%;         /* #fde373 - RGB(253, 227, 115) Secondary */
+  --scc-blue: 218 46% 48%;                /* #4271b5 - RGB(66, 113, 181) Accent-1 */
+  --scc-teal: 179 100% 36%;               /* #00b7b4 - RGB(0, 183, 180) Accent-2 */
+  --scc-purple-blue: 250 34% 47%;         /* #6950a1 - RGB(105, 80, 161) Accent-3 */
+  --scc-orange: 26 87% 54%;               /* #f68c1f - RGB(246, 140, 31) Accent-4 */
+  --scc-green: 129 40% 43%;               /* #43974f - RGB(67, 151, 78) Accent-5 */
+  --scc-purple-red: 295 99% 22%;          /* #640170 - RGB(100, 1, 112) Accent-6 */
+  --scc-charcoal: 0 0% 25%;               /* #404040 - RGB(64, 64, 64) Accent-7 */
 
   /* Application Colors using SCC Brand */
   --background: hsl(0, 0%, 100%);
@@ -138,12 +138,44 @@
     color: hsl(var(--scc-gold));
   }
 
+  .text-scc-blue {
+    color: hsl(var(--scc-blue));
+  }
+
+  .text-scc-teal {
+    color: hsl(var(--scc-teal));
+  }
+
+  .text-scc-orange {
+    color: hsl(var(--scc-orange));
+  }
+
+  .text-scc-green {
+    color: hsl(var(--scc-green));
+  }
+
   .bg-scc-cardinal {
     background-color: hsl(var(--scc-cardinal-red));
   }
 
   .bg-scc-gold {
     background-color: hsl(var(--scc-gold));
+  }
+
+  .bg-scc-blue {
+    background-color: hsl(var(--scc-blue));
+  }
+
+  .bg-scc-teal {
+    background-color: hsl(var(--scc-teal));
+  }
+
+  .bg-scc-orange {
+    background-color: hsl(var(--scc-orange));
+  }
+
+  .bg-scc-green {
+    background-color: hsl(var(--scc-green));
   }
 }
 

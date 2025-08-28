@@ -16,8 +16,8 @@ export default function QuickActions() {
             className="w-full justify-start h-auto p-3 border border-border hover:bg-muted"
             data-testid="action-upload-transcript"
           >
-            <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center mr-3">
-              <Upload className="h-5 w-5 text-primary" />
+            <div className="w-10 h-10 bg-scc-cardinal/10 rounded-lg flex items-center justify-center mr-3">
+              <Upload className="h-5 w-5 text-scc-cardinal" />
             </div>
             <div className="flex-1 text-left">
               <div className="font-medium">Upload Transcript</div>
@@ -32,8 +32,8 @@ export default function QuickActions() {
             className="w-full justify-start h-auto p-3 border border-border hover:bg-muted"
             data-testid="action-import-assist-data"
           >
-            <div className="w-10 h-10 bg-secondary/10 rounded-lg flex items-center justify-center mr-3">
-              <Handshake className="h-5 w-5 text-secondary" />
+            <div className="w-10 h-10 bg-scc-blue/10 rounded-lg flex items-center justify-center mr-3">
+              <Handshake className="h-5 w-5 text-scc-blue" />
             </div>
             <div className="flex-1 text-left">
               <div className="font-medium">Import Assist.org Data</div>
@@ -48,8 +48,8 @@ export default function QuickActions() {
             className="w-full justify-start h-auto p-3 border border-border hover:bg-muted"
             data-testid="action-validate-plan"
           >
-            <div className="w-10 h-10 bg-accent/10 rounded-lg flex items-center justify-center mr-3">
-              <CheckCircle className="h-5 w-5 text-accent" />
+            <div className="w-10 h-10 bg-scc-green/10 rounded-lg flex items-center justify-center mr-3">
+              <CheckCircle className="h-5 w-5 text-scc-green" />
             </div>
             <div className="flex-1 text-left">
               <div className="font-medium">Validate Plan</div>
