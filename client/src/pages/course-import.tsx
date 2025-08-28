@@ -213,9 +213,9 @@ MUSC 300|Music Appreciation|3|`;
     <div className="container max-w-6xl mx-auto py-6 space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold" data-testid="text-page-title">Course Import</h1>
+          <h1 className="text-3xl font-bold" data-testid="text-page-title">SCC Course Import</h1>
           <p className="text-muted-foreground mt-2">
-            Import course data from the SCC catalog or add individual courses
+            Import course data from the Sacramento City College 2025-2026 catalog
           </p>
         </div>
         <div className="flex gap-2">
@@ -243,7 +243,7 @@ MUSC 300|Music Appreciation|3|`;
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <BookOpen className="w-5 h-5" />
-              Add Single Course
+              Add SCC Course
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -255,7 +255,7 @@ MUSC 300|Music Appreciation|3|`;
                     name="courseCode"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Course Code</FormLabel>
+                        <FormLabel>SCC Course Code</FormLabel>
                         <FormControl>
                           <Input placeholder="e.g., MATH 300" {...field} data-testid="input-course-code" />
                         </FormControl>

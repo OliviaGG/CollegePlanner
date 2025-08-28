@@ -15,7 +15,7 @@ export default function Header() {
             <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
               <GraduationCap className="h-4 w-4 text-primary-foreground" />
             </div>
-            <h1 className="text-xl font-bold text-foreground">EduPlan</h1>
+            <h1 className="text-xl font-bold text-foreground">SCC EduPlan</h1>
           </div>
         </div>
         <div className="flex items-center space-x-4">
@@ -25,11 +25,11 @@ export default function Header() {
           <div className="flex items-center space-x-2">
             <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
               <span className="text-primary-foreground text-sm font-medium" data-testid="user-initials">
-                {user?.firstName?.[0]}{user?.lastName?.[0] || "U"}
+                {(user as any)?.firstName?.[0]}{(user as any)?.lastName?.[0] || "U"}
               </span>
             </div>
             <span className="text-sm font-medium" data-testid="user-full-name">
-              {user?.firstName} {user?.lastName || "User"}
+              {(user as any)?.firstName} {(user as any)?.lastName || "User"}
             </span>
           </div>
         </div>

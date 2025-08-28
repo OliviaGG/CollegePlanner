@@ -22,12 +22,12 @@ export default function Dashboard() {
       {/* Dashboard Header */}
       <div className="space-y-2">
         <h2 className="text-3xl font-bold tracking-tight">
-          Welcome back, <span data-testid="user-first-name">{user?.firstName || "Student"}</span>
+          Welcome back, <span data-testid="user-first-name">{(user as any)?.firstName || "Student"}</span>
         </h2>
         <p className="text-muted-foreground">
           Current Semester: <span className="font-medium">Spring 2024</span> • 
-          <span className="ml-1" data-testid="user-institution">{user?.currentInstitution || "Community College"}</span> • 
-          <span className="ml-1" data-testid="user-major">{user?.targetMajor || "Transfer Program"}</span>
+          <span className="ml-1" data-testid="user-institution">{(user as any)?.currentInstitution || "Sacramento City College"}</span> • 
+          <span className="ml-1" data-testid="user-major">{(user as any)?.targetMajor || "Transfer Program"}</span>
         </p>
       </div>
 
@@ -64,7 +64,7 @@ export default function Dashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left Column: Current Progress */}
         <div className="lg:col-span-2 space-y-6">
-          <ProgressOverview stats={stats} />
+          <ProgressOverview stats={stats as any} />
           <SemesterTimeline />
         </div>
 

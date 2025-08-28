@@ -91,12 +91,13 @@ export class MemStorage implements IStorage {
 
   private seedInstitutions() {
     const californiaInstitutions: InsertInstitution[] = [
-      { name: "De Anza College", type: "CCC", assistOrgId: "113", abbreviation: "DEANZA" },
-      { name: "Foothill College", type: "CCC", assistOrgId: "44", abbreviation: "FOOTHILL" },
-      { name: "University of California, Berkeley", type: "UC", assistOrgId: "76", abbreviation: "UCB" },
-      { name: "University of California, Los Angeles", type: "UC", assistOrgId: "77", abbreviation: "UCLA" },
-      { name: "San Jose State University", type: "CSU", assistOrgId: "138", abbreviation: "SJSU" },
-      { name: "California State University, San Francisco", type: "CSU", assistOrgId: "139", abbreviation: "SFSU" },
+      { name: "Sacramento City College", type: "CCC", assistOrgId: "SCC", abbreviation: "SCC" },
+      { name: "University of California, Davis", type: "UC", assistOrgId: "76", abbreviation: "UCD" },
+      { name: "University of California, Berkeley", type: "UC", assistOrgId: "77", abbreviation: "UCB" },
+      { name: "University of California, Los Angeles", type: "UC", assistOrgId: "78", abbreviation: "UCLA" },
+      { name: "California State University, Sacramento", type: "CSU", assistOrgId: "138", abbreviation: "CSUS" },
+      { name: "San Francisco State University", type: "CSU", assistOrgId: "139", abbreviation: "SFSU" },
+      { name: "Cal Poly San Luis Obispo", type: "CSU", assistOrgId: "140", abbreviation: "CPSLO" },
     ];
 
     californiaInstitutions.forEach(inst => {

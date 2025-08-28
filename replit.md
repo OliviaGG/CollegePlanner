@@ -1,6 +1,6 @@
 # Overview
 
-EduPlan is a comprehensive academic planning and transfer pathway management system designed for community college students. The application helps students track their educational progress, plan course sequences, manage transfer requirements, and integrate with California's Assist.org transfer articulation system. Built as a full-stack web application, it provides tools for transcript management, course planning, prerequisite tracking, and deadline management to streamline the transfer process from community colleges to four-year universities.
+EduPlan is a comprehensive academic planning and transfer pathway management system designed specifically for Sacramento City College (SCC) students. The application helps SCC students track their educational progress, plan course sequences, manage transfer requirements, and integrate with California's Assist.org transfer articulation system. Built as a full-stack web application, it provides tools for transcript management, course planning, prerequisite tracking, and deadline management to streamline the transfer process from SCC to four-year universities.
 
 # User Preferences
 
