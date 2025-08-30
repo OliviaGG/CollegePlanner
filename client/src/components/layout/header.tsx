@@ -115,7 +115,10 @@ export default function Header() {
                   <User className="mr-2 h-4 w-4" />
                   <span>Profile Settings</span>
                 </DropdownMenuItem>
-                <DropdownMenuItem>
+                <DropdownMenuItem onClick={() => {
+                  // For now, show a simple alert - could be expanded to open a preferences modal
+                  alert('Preferences functionality coming soon! You can update your profile settings from the Profile page.');
+                }}>
                   <Settings className="mr-2 h-4 w-4" />
                   <span>Preferences</span>
                 </DropdownMenuItem>
