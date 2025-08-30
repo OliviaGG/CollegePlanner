@@ -106,5 +106,4 @@
   "optionalDependencies": {
     "bufferutil": "^4.0.8"
   }
-  web: npm run start
 }
