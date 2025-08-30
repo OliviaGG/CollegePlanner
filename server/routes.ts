@@ -308,12 +308,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
       await storage.createActivityLog({
         userId: userId,
         action: "UPDATE_PROFILE",
-        description: "Updated profile information",
+        description: `Updated profile: ${updates.firstName || ''} ${updates.lastName || ''}`.trim(),
         entityType: "USER",
         entityId: userId
       });
       
-      res.json(user);
+      // Return the updated user data
+      res.json({
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        currentInstitution: user.currentInstitution,
+        targetMajor: user.targetMajor
+      });
     } catch (error) {
       res.status(400).json({ message: "Invalid profile data", error });
     }

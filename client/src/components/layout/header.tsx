@@ -27,6 +27,24 @@ export default function Header() {
       setLoggedInUser(JSON.parse(savedUser));
       setIsLoggedIn(true);
     }
+
+    // Listen for localStorage changes to update header when profile is updated
+    const handleStorageChange = () => {
+      const updatedUser = localStorage.getItem('loggedInUser');
+      if (updatedUser) {
+        setLoggedInUser(JSON.parse(updatedUser));
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    
+    // Also listen for custom events for same-tab updates
+    window.addEventListener('userProfileUpdated', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('userProfileUpdated', handleStorageChange);
+    };
   }, []);
 
   const handleLogin = () => {

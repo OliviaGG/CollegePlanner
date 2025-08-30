@@ -27,9 +27,23 @@ export default function Profile() {
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
-  const { data: user } = useQuery({
+  // Get user data from both API and localStorage
+  const { data: apiUser } = useQuery({
     queryKey: ["/api/user"],
   });
+
+  // Check for logged-in user in localStorage
+  const [loggedInUser, setLoggedInUser] = useState<any>(null);
+
+  useState(() => {
+    const savedUser = localStorage.getItem('loggedInUser');
+    if (savedUser) {
+      setLoggedInUser(JSON.parse(savedUser));
+    }
+  });
+
+  // Use logged-in user data if available, otherwise fall back to API user
+  const user = loggedInUser || apiUser;
 
   const { data: institutions } = useQuery({
     queryKey: ["/api/institutions"],
@@ -48,8 +62,16 @@ export default function Profile() {
       });
       return response.json();
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["/api/user"] });
+      // Update localStorage with the response data
+      const updatedUser = { ...user, ...data };
+      localStorage.setItem('loggedInUser', JSON.stringify(updatedUser));
+      setLoggedInUser(updatedUser);
+      
+      // Dispatch custom event to notify header of profile change
+      window.dispatchEvent(new Event('userProfileUpdated'));
+      
       setIsEditingProfile(false);
       toast({ title: "Profile updated successfully!" });
     },
@@ -94,6 +116,12 @@ export default function Profile() {
       currentInstitution: formData.get("currentInstitution"),
       targetMajor: formData.get("targetMajor"),
     };
+    
+    // Update localStorage immediately for persistence
+    const updatedUser = { ...user, ...profileData };
+    localStorage.setItem('loggedInUser', JSON.stringify(updatedUser));
+    setLoggedInUser(updatedUser);
+    
     updateProfileMutation.mutate(profileData);
   };
 
